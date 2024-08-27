@@ -1,0 +1,31 @@
+.display-inline {
+    display: inline;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-card {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    margin: 5px;
+}
+
+.contact-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.contact-card strong {
+    color: #333;
+}
+
+.contact-card:hover {
+    transform: scale(1.02);
+}

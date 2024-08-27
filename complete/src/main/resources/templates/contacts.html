@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>La mia rubrica!</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="/styles/common.css" type="text/css">
+    <link rel="stylesheet" href="/styles/contacts.css" type="text/css">
+  </head>
+  <body id="app">
+    <myheader></myheader>
+    <navbar>
+      <form id="logout-form" th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+      </form>
+    </navbar>
+
+    <div class="container">
+        <h1>Contatti</h1>
+        <div th:each="user : ${users}" class="contact-list">
+            <div class="contact-card">
+                <div>
+                    <strong class="display-inline">Nome: </strong><p th:text="${user.name}" class="display-inline"></p>
+                </div>
+                <div>
+                    <strong class="display-inline">Cognome: </strong><p th:text="${user.surname}" class="display-inline"></p>
+                </div>
+                <div>
+                    <strong class="display-inline">Telefono: </strong><p th:text="${user.telephone} ? ${user.telephone} : 'Telefono non inserito'" class="display-inline"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+  <script type="module">
+    const { createApp, ref } = Vue
+    import Navbar from '/components/nav.js'
+    import Myheader from '/components/header.js'
+
+    createApp({
+      components: {
+        Navbar,
+        Myheader
+      },
+      setup() {
+
+        return {
+        }
+      }
+    }).mount('#app')
+  </script>
+</html>

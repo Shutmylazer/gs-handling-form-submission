@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>La mia rubrica!</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="/styles/common.css" type="text/css">
+    <link rel="stylesheet" href="/styles/profile.css" type="text/css">
+  </head>
+  <body id="app">
+    <myheader></myheader>
+    <navbar>
+      <form id="logout-form" th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+      </form>
+    </navbar>
+
+    <div class="container">
+      <h1>Il mio profilo</h1>
+      <form action="#" th:action="@{/updateUser}" th:object="${user}" method="POST">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" th:field="*{name}" th:value="*{name}" required>
+
+        <label for="surname">Cognome:</label>
+        <input type="text" id="surname" name="surname" th:field="*{surname}" th:value="*{surname}" required>
+
+        <label for="telephone">Numero di Telefono:</label>
+        <input type="tel" id="telephone" name="telephone" th:field="*{telephone}" th:value="*{telephone}">
+          <!--<small>Formato: 123-456-7890</small>
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          -->
+
+        <label for="password">Nuova Password:</label>
+        <input type="password" id="password" name="password" th:field="*{password}" th:value="*{password}">
+
+        <input type="submit" value="Salva Modifiche">
+      </form>
+    </div>
+  </body>
+  <script type="module">
+    const { createApp, ref } = Vue
+    import Navbar from '/components/nav.js'
+    import Myheader from '/components/header.js'
+
+    createApp({
+      components: {
+        Navbar,
+        Myheader
+      },
+      setup() {
+        return {
+        }
+      }
+    }).mount('#app')
+  </script>
+</html>

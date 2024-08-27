@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>La mia rubrica!</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <link rel="stylesheet" href="/styles/common.css" type="text/css">
+        <link rel="stylesheet" href="/styles/register.css" type="text/css">
+    </head>
+    <body id="app">
+        <myheader></myheader>
+        <navbar>
+            <form id="logout-form" th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </navbar>
+
+        <div class="container">
+            <h1>Registrazione</h1>
+            <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" v-model="username" th:field="*{username}" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" v-model="password" th:field="*{password}" required>
+
+                <label for="confirmPassword">Conferma Password:</label>
+                <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+
+                <label for="name">Nome:</label>
+                <input type="text" id="name" v-model="name" th:field="*{name}" required>
+
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" v-model="surname" th:field="*{surname}" required>
+
+                <div v-if="showErrorMessage()" class="error">
+                    Le password non corrispondono.
+                </div>
+                <div v-if="serverErrorMessage" class="error">
+                    {{serverErrorMessage}}
+                </div>
+
+                <input type="submit" :disabled="!canRegister()" value="Registrati">
+            </form>
+        </div>
+        <!--<form action="#" th:action="@{/register}" th:object="${user}" method="post">
+            <table>
+                <tr>
+                    <td>User:</td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Surname Error</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{name}" /></td>
+                </tr>
+                <tr>
+                    <td>Surname:</td>
+                    <td><input type="text" th:field="*{surname}" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>-->
+    </body>
+    <script type="module">
+        const { createApp, ref } = Vue
+        import Navbar from '/components/nav.js'
+        import Myheader from '/components/header.js'
+
+        createApp({
+          components: {
+            Navbar,
+            Myheader
+          },
+          setup() {
+            const username = ref('')
+            const password = ref('')
+            const confirmPassword = ref('')
+            const name = ref('')
+            const surname = ref('')
+            const serverErrorMessage = ref('[[${registrationError}]]')
+
+            function canRegister() {
+              return username.value &&
+                     password.value &&
+                     (password.value === confirmPassword.value) &&
+                     name.value &&
+                     surname.value
+            }
+
+            function showErrorMessage() {
+              return password.value && confirmPassword.value && (password.value !== confirmPassword.value)
+            }
+
+            return {
+              username,
+              password,
+              confirmPassword,
+              name,
+              surname,
+              canRegister,
+              showErrorMessage,
+              serverErrorMessage
+            }
+          }
+        }).mount('#app')
+    </script>
+</html>

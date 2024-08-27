@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>La mia rubrica!</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <link rel="stylesheet" href="/styles/common.css" type="text/css">
+        <link rel="stylesheet" href="/styles/login.css" type="text/css">
+    </head>
+    <body id="app">
+        <myheader></myheader>
+        <navbar>
+            <form id="logout-form" th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </navbar>
+
+        <div class="container">
+            <h1>Login</h1>
+            <form action="#" th:action="@{/login}" th:object="${user}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" v-model="username" th:field="*{username}" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" v-model="password" th:field="*{password}" required>
+
+                <div th:if="${param.error}" class="error">
+                    Username/password non validi.
+                </div>
+
+                <div th:if="${param.logout}" class="error">
+                    Logout avvenuto con successo.
+                </div>
+
+                <div v-if="serverErrorMessage" class="error">
+                    {{serverErrorMessage}}
+                </div>
+
+                <input type="submit" :disabled="username.length < 2 || password.length < 2" value="Login">
+            </form>
+        </div>
+
+    <!--
+    -->
+    </body>
+    <script type="module">
+        const { createApp, ref } = Vue
+        import Navbar from '/components/nav.js'
+        import Myheader from '/components/header.js'
+
+        createApp({
+          components: {
+            Navbar,
+            Myheader
+          },
+          setup() {
+            const username = ref('')
+            const password = ref('')
+            const serverErrorMessage = ref('[[${loginError}]]')
+
+            return {
+              username,
+              password,
+              serverErrorMessage
+            }
+          }
+        }).mount('#app')
+    </script>
+</html>

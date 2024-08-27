@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>La mia rubrica!</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <link rel="stylesheet" href="/styles/common.css" type="text/css">
+        <link rel="stylesheet" href="/styles/index.css" type="text/css">
+    </head>
+    <body id="app">
+        <myheader></myheader>
+        <navbar>
+            <form id="logout-form" th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </navbar>
+
+        <div class="container">
+            <h1>Benvenuto!</h1>
+            <p>
+                Questa è la tua rubrica telefonica personale. Qui puoi gestire tutti i tuoi contatti in modo semplice e veloce.
+                Utilizza il menu di navigazione in alto per registrarti, effettuare il login, visualizzare i tuoi contatti o modificare le tue informazioni personali.
+            </p>
+        </div>
+    </body>
+    <script type="module">
+        const { createApp, ref } = Vue
+        import Navbar from '/components/nav.js'
+        import Myheader from '/components/header.js'
+
+        createApp({
+          components: {
+            Navbar,
+            Myheader
+          },
+          setup() {
+            //const user = ref([[${user}]])
+
+            return {
+            }
+          }
+        }).mount('#app')
+    </script>
+</html>
